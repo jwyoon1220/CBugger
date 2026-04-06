@@ -84,6 +84,7 @@ class FastAsmParser {
                 "RET" -> OpCode.RET
                 "LOAD_LOCAL" -> OpCode.LOAD_LOCAL
                 "STORE_LOCAL" -> OpCode.STORE_LOCAL
+                "SYSCALL" -> OpCode.SYSCALL
                 else -> null
             }
 

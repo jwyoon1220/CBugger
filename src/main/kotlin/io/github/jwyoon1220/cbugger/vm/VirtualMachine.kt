@@ -3,10 +3,12 @@ package io.github.jwyoon1220.cbugger.vm
 import io.github.jwyoon1220.cbugger.vm.memory.OperandStack
 import io.github.jwyoon1220.cbugger.vm.memory.VirtualRam
 import io.github.jwyoon1220.cbugger.vm.isa.OpCode
+import io.github.jwyoon1220.cbugger.vm.stdlib.SyscallTable
 
 class VirtualMachine(
     private val bytecode: ByteArray,
-    private val operands: IntArray
+    private val operands: IntArray,
+    private val syscalls: SyscallTable? = null
 ) {
     val ram = VirtualRam(1024 * 1024) // 1MB Off-heap
     val stack = OperandStack()
@@ -133,6 +135,13 @@ class VirtualMachine(
                 OpCode.JMP_NZ -> {
                     val cond = stack.pop()
                     ip = if (cond != 0) operands[ip] else ip + 1
+                }
+
+                OpCode.SYSCALL -> {
+                    val id = operands[ip]
+                    val sc = syscalls ?: throw VmRuntimeException("No syscall table configured at IP: $ip")
+                    sc.dispatch(id)
+                    ip++
                 }
 
                 else -> {

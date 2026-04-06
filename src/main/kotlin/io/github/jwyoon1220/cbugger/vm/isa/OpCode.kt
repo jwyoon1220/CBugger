@@ -35,4 +35,7 @@ object OpCode {
     // Local variable operations
     const val LOAD_LOCAL: Byte = 0x40  // Push local variable
     const val STORE_LOCAL: Byte = 0x41 // Pop into local variable
+
+    // Syscall
+    const val SYSCALL: Byte = 0x50  // Call C standard library function
 }
