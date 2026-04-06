@@ -11,10 +11,15 @@ class OperandStack(capacity: Int = 1024) {
         stack.size(capacity)
     }
 
+    companion object {
+        private const val LARGE_STACK_THRESHOLD = 65536
+    }
+
     fun push(value: Int) {
         sp++
         if (sp >= stack.size) {
-            stack.size(stack.size * 2)
+            val newSize = if (stack.size < LARGE_STACK_THRESHOLD) stack.size * 2 else stack.size + stack.size / 2
+            stack.size(newSize)
         }
         stack.set(sp, value)
     }
