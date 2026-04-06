@@ -29,6 +29,11 @@ class OperandStack(capacity: Int = 1024) {
         return stack.getInt(sp)
     }
 
+    fun getAt(index: Int): Int {
+        if (index < 0 || index > sp) throw IndexOutOfBoundsException("Index $index out of stack bounds [0, $sp]")
+        return stack.getInt(index)
+    }
+
     fun isEmpty(): Boolean = sp < 0
 
     fun size(): Int = sp + 1

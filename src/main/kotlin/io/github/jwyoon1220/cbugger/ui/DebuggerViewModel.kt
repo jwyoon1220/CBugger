@@ -34,7 +34,7 @@ class DebuggerViewModel(
         stackSnapshot.clear()
         val start = maxOf(0, vm.stack.sp - 10)
         for (i in start..vm.stack.sp) {
-            if (i >= 0) stackSnapshot.add(vm.stack.peek())
+            if (i >= 0) stackSnapshot.add(vm.stack.getAt(i))
         }
     }
 }
